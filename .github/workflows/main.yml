@@ -1,62 +1,57 @@
-#represents my Github actions(pipeline)
+# Représente mes actions GitHub (pipeline)
 name: Build & Deploy Spring App
 
-# specify when to trigger this actions
+# Spécifie quand déclencher cette action
 on:
   push:
     branches:
       - main
 
 jobs:
-  #the name that we will give to our job
+  # Le nom que nous donnerons à notre job
   build-deploy:
-    name: Build and Deploy Spring Boot
-    #define a runner : the machine on which we want to run this actions
+    name: Construction et déploiement de Spring Boot
+    # Définit la machine sur laquelle nous voulons exécuter cette action
     runs-on: ubuntu-latest
     steps:
-      #checkout means that github actions will go and copy the code from github(or repository ) and clon it to the runner
-      - name: Checkout code
-        #means that we want run some actions
-        uses: actions/checkout@v3
+      # L'étape "Checkout code" signifie que les actions GitHub copieront le code depuis GitHub (ou le dépôt) et le cloneront sur la machine d'exécution
+      - name: Recuperer le code
+        # Indique que nous voulons exécuter certaines actions
+        uses: actions/checkout@v2
 
-      - name : SetupJDK 17
-        uses: actions/setup-java@v3
+      - name: Configuration de JDK 17
+        uses: actions/setup-java@v2
         with:
           distribution: 'corretto'
           java-version: 17
 
-      - name : Unit Test
-        run: mvn -B test --file pom.xml # une seule cmd
+      - name: Exécuter les tests unitaires
+        run: mvn -B test --file pom.xml # Une seule commande
 
-      - name : Build The Application
-        run : |
+      - name: Construction de l'application
+        run: |
           mvn clean 
           mvn -B package --file pom.xml
 
-      - name: Build Docker Image
+      - name: Construction de l'image Docker
         uses: docker/build-push-action@v2
         with:
           context: .
-          dockerfile : Dockerfile
+          dockerfile: Dockerfile
           push: false
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-boot-pipeline:latest
-#push the docker image in docker hub
+        # Pousser l'image Docker vers Docker Hub
 
-      - name: Login to Docker Hub
+      - name: Connexion à Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-#push the image to docker hub
-      - name: Push to Docker Hub
+      - name: Pousser vers Docker Hub
         uses: docker/build-push-action@v2
-        context: .
-        dockerfile: Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-boot-pipeline:latest
-
-
-
-
-
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-boot-pipeline:latest
