@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
-          java-version : 17
+          java-version: 17
 
       - name : Unit Test
         run: mvn -B test --file pom.xml # une seule cmd
@@ -39,7 +39,7 @@ jobs:
           context: .
           dockerfile : Dockerfile
           push: false
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-boot-pipeline:$(date-'%Y-%m-%d')
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-boot-pipeline:$(date + '%Y-%m-%d')
 #push the docker image in docker hub
 
       - name: Login to Docker Hub
