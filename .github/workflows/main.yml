@@ -1,0 +1,38 @@
+#represents my Github actions(pipeline)
+name: Build & Deploy Spring App
+
+# specify when to trigger this actions
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  #the name that we will give to our job
+  build-deploy:
+    name: Build and Deploy Spring Boot
+    #define a runner : the machine on which we want to run this actions
+    runs-on: ubuntu-latest
+    steps:
+      #checkout means that github actions will go and copy the code from github(or repository ) and clon it to the runner
+      - name: Checkout code
+        #means that we want run some actions
+        uses: actions/checkout@v4
+
+      - name : SetupJDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version : 17
+
+      - name : Unit Test
+        run: mvn -B test --file pom.xml # une seule cmd
+
+      - name : Build The Application
+        run : |
+          mvn clean 
+          mvn -B package --file pom.xml
+          
+          
+
+
