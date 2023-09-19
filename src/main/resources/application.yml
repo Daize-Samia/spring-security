@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/jwtsecuritybd?createDatabaseIfNotExist=true
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+
+application:
+  security:
+    jwt:
+      secret-key : xywl3i02mhTGtlDO9JNUO3U6ulR6N7hJNjJfzPz5FYQE07fZ6m8uU14cByGnQqq6pAP8md4OMwDLgVl3So4COdgjmeKgmTmyffQDRb2nsYOMpCdPKIluWU8n/ZjO6nJUznhNAdEtlxAPdU3sUXgj1LDADWMtVVapVqGQxCNa8oH6qJpzj4jtyxFhm5hQ/tfwRCqfy73AyYSIwju63RgeQt12vCJUqWyRsyBEziwxbx7iqVsnUYYx2W84AewFaqOS9MtxPQWfN05L+RnUe+7G047tTI/5ywIKXI2HRwcVbeEJ9Vv21st5cVHJgRV1mr1p/jcFnTNrF7DUpv8zS3XTUYn4xmklUcvR1cRWueE9WUU
+      expiration : 120 000 #one day
+      refresh-token :
+        expiration: 604800

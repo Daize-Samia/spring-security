@@ -1,0 +1,33 @@
+services:
+  mysql:
+    container_name: mysql-container
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_DATABASE: jwtsecuritybd
+    ports:
+      - "3301:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - spring-boot-net
+  spring-boot-app:
+    container_name: springDemo
+    image: spring-demo
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-boot-net
+    depends_on:
+      - mysql
+
+volumes:
+  mysql:
+
+networks:
+  spring-boot-net:
+    driver: bridge
+
+
+
