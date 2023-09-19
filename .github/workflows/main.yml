@@ -34,7 +34,7 @@ jobs:
           mvn -B package --file pom.xml
 
       - name: Build Docker Image
-        uses: actions/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           dockerfile : Dockerfile
@@ -50,7 +50,7 @@ jobs:
 
 #push the image to docker hub
       - name: Push to Docker Hub
-        uses: actions/build-push-action@v2
+        uses: docker/build-push-action@v5
         context: .
         dockerfile: Dockerfile
         push: true
