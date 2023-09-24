@@ -1,6 +1,6 @@
 services:
   mysql:
-    container_name: mysql-container
+    container_name: mysqlcontainer
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD:
