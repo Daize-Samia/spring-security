@@ -7,16 +7,16 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_DATABASE: jwtsecuritybd
     ports:
-      - "3309:3306"
+      - "3311:3306"
     volumes:
       - mysql:/var/lib/mysql
     networks:
       - spring-boot-net
   spring-boot-app:
     container_name: springDemoPipeline
-    image: samiadaize/spring-boot-pipeline
+    image: spring-boot-pipeline
     ports:
-      - "8089:8080"
+      - "8011:8080"
     networks:
       - spring-boot-net
     depends_on:
@@ -28,6 +28,7 @@ volumes:
 networks:
   spring-boot-net:
     driver: bridge
+    external: true
 
 
 
