@@ -11,14 +11,14 @@ services:
     volumes:
       - mysql:/var/lib/mysql
     networks:
-      - spring-boot-net
+      - net-msbuild
   spring-boot-app:
-    container_name: springDemoPipeline
-    image: spring-boot-pipeline
+    container_name: spring-msbuild
+    image: spring-mutli-stage-build
     ports:
       - "8011:8080"
     networks:
-      - spring-boot-net
+      - net-msbuild
     depends_on:
       - mysql
 
@@ -26,7 +26,7 @@ volumes:
   mysql:
 
 networks:
-  spring-boot-net:
+  net-msbuild:
     driver: bridge
     external: true
 
